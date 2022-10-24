@@ -33,16 +33,50 @@ const fetchMyIP = function(callback) {
 
 };
 
-//  const cb = function(error, IP) {
+const fetchCoordsByIP = function(ip, callback) {
+ 
+  request(`https://ipwho.is/${ip}`, (error, response, body) => {
+  
+    if (error) {
+      callback(error, null);
+      return;
+    }
+    
+    // if (response.statusCode !== 200) {
+    //   const msg = `Status Code ${response.statusCode} when fetching IP. Response: ${body}`;
+    //   callback(Error(msg), null);
+    //   return;
+    // }
+
+    const locationObj = JSON.parse(body); // parse
+    if (locationObj.success === false) {
+      const msg = `The attempt to fetch the location data for the IP address: ${ip} failed.`;
+      return callback(msg, null);
+    }
+    const location = {};
+    location.latitude = locationObj.latitude;
+    location.longitude = locationObj.longitude;
+    callback(null, location);
+  });
+
+
+
+}
+  
+
+//  const cb = function(error, location) {
 //   if (error) {
 //    console.log(error);
-//   } else if (IP) {
-//    console.log(IP);
+//   } else if (location) {
+//    console.log(location);
 //   }
 // };
 
-// fetchMyIP(cb);
+// fetchCoordsByIP('65.110.215.128', cb);
 
 
 
-module.exports = { fetchMyIP };
+module.exports = { 
+                   fetchMyIP,
+                   fetchCoordsByIP,
+                 };
