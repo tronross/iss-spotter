@@ -1,10 +1,10 @@
 const request = require('request');
 
+// FUNCTION
+// fetchMyIP:
 const fetchMyIP = function(callback) {
   request('https://api.ipify.org?format=json', (error, response, body) => {
-    // let IP = null;
-    // let err = null;
-    
+  
     if (error) {
       callback(error, null);
       return;
@@ -23,6 +23,8 @@ const fetchMyIP = function(callback) {
 
 };
 
+// FUNCTION
+// fetchCoordsByIP:
 const fetchCoordsByIP = function(ip, callback) {
  
   request(`https://ipwho.is/${ip}`, (error, response, body) => {
@@ -46,17 +48,9 @@ const fetchCoordsByIP = function(ip, callback) {
 
 };
 
-/**
- * Makes a single API request to retrieve upcoming ISS fly over times the for the given lat/lng coordinates.
- * Input:
- *   - An object with keys `latitude` and `longitude`
- *   - A callback (to pass back an error or the array of resulting data)
- * Returns (via Callback):
- *   - An error, if any (nullable)
- *   - The fly over times as an array of objects (null if error). Example:
- *     [ { risetime: 134564234, duration: 600 }, ... ]
- */
- const fetchISSFlyOverTimes = function(coords, callback) {
+// FUNCTION
+// fetchISSFlyOverTimes:
+  const fetchISSFlyOverTimes = function(coords, callback) {
   request(`https://iss-flyover.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}
   `, (error, response, body) => {
   
@@ -66,43 +60,34 @@ const fetchCoordsByIP = function(ip, callback) {
     }
 
     if (response.statusCode !== 200) {
-      const msg = `Status Code ${response.statusCode} when fetching fly over times. Response: ${body}`;
-      callback(Error(msg), null);
+      const msg = `Status Code ${response.statusCode} when fetching fly over times.`;
+      callback(msg, null);
       return;
     }
 
     const flyOverTimes = JSON.parse(body); // parse
-    if (flyOverTimes.message === false) {
-      const msg = `The attempt to fetch the location data for the IP address: ${ip} failed. Server message says ${locationObj.message}`;
-      callback(Error(msg), null);
-      return;
-    }
-    
-    // if (locationObj.success === false) {
-    //   const msg = `The attempt to fetch the location data for the IP address: ${ip} failed. Server message says ${locationObj.message}`;
-    //   callback(Error(msg), null);
-    //   return;
-    callback(null, flyOverTimes);
-    //  console.log(flyOverTimes);
+    const flyOvers = flyOverTimes.response;
+    callback(null, flyOvers);
     
   });
 };
   
 
-const cb = function(error, flyOverTimes) {
-  if (error) {
-    console.log(error);
-  } else if (flyOverTimes) {
-    console.log(flyOverTimes);
-  }
-};
+// const cb = function(error, flyOvers) {
+//   if (error) {
+//     console.log(error);
+//   } else if (flyOvers) {
+//     console.log(flyOvers);
+//   }
+// };
 
-fetchISSFlyOverTimes({ latitude: 11143.653226, longitude: -79.3831843 }, cb);
-// fetchCoordsByIP('65.110.215.128', cb);
+// fetchISSFlyOverTimes({ latitude: 43.653226, longitude: -79.3831843 }, cb);
+// // fetchCoordsByIP('65.110.215.128', cb);
 
 
 
 module.exports = {
                    fetchMyIP,
                    fetchCoordsByIP,
+                   fetchISSFlyOverTimes,
                  };
