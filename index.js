@@ -1,5 +1,7 @@
 const { nextISSTimesForMyLocation } = require('./iss');
 
+// FUNCTION
+// printFlyOvers: translates theoretical ISS fly-over times into user-friendly format and prints them to the console
 const printFlyOvers = function(flyOvers) {
   for (const fly of flyOvers) {
     const whenFly = new Date(0);
@@ -9,6 +11,8 @@ const printFlyOvers = function(flyOvers) {
   }
 };
 
+// FUNCTION
+// nextISSTimesForMyLocation: coordinates the retrieval and relaying of theoretical ISS fly-over times
 nextISSTimesForMyLocation((error, flyOvers) => {
   if (error) {
     return console.log("It didn't work!", error);

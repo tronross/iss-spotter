@@ -1,7 +1,7 @@
 const request = require('request');
 
 // FUNCTION
-// fetchMyIP:
+// fetchMyIP: retrieves IP address for WAN
 const fetchMyIP = function(callback) {
   request('https://api.ipify.org?format=json', (error, response, body) => {
   
@@ -24,7 +24,7 @@ const fetchMyIP = function(callback) {
 };
 
 // FUNCTION
-// fetchCoordsByIP:
+// fetchCoordsByIP: retrieves location data using IP address
 const fetchCoordsByIP = function(ip, callback) {
  
   request(`https://ipwho.is/${ip}`, (error, response, body) => {
@@ -49,7 +49,7 @@ const fetchCoordsByIP = function(ip, callback) {
 };
 
 // FUNCTION
-// fetchISSFlyOverTimes:
+// fetchISSFlyOverTimes: retrieves (theoretical) ISS fly-over times from a deprecated API using location data
 const fetchISSFlyOverTimes = function(coords, callback) {
   request(`https://iss-flyover.herokuapp.com/json/?lat=${coords.latitude}&lon=${coords.longitude}
   `, (error, response, body) => {
@@ -72,7 +72,7 @@ const fetchISSFlyOverTimes = function(coords, callback) {
 };
   
 // FUNCTION
-// nextISSTimesForMyLocation:
+// nextISSTimesForMyLocation: chains functions to retrieve (theoretical) ISS fly-over times
 const nextISSTimesForMyLocation = function(callback) {
   fetchMyIP((error, ip) => {
     if (error) {
