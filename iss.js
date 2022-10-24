@@ -65,8 +65,7 @@ const fetchCoordsByIP = function(ip, callback) {
       return;
     }
 
-    const flyOverTimes = JSON.parse(body); // parse
-    const flyOvers = flyOverTimes.response;
+    const flyOvers = JSON.parse(body).response; // parse
     callback(null, flyOvers);
     
   });
