@@ -96,18 +96,4 @@ const nextISSTimesForMyLocation = function(callback) {
 };
 
 
-// const cb = function(error, retData) {
-//   if (error) {
-//     console.log(error);
-//   } else if (retData) {
-//     console.log(retData);
-//   }
-// };
-
-// nextISSTimesForMyLocation(cb);
-// fetchISSFlyOverTimes({ latitude: 43.653226, longitude: -79.3831843 }, cb);
-// // fetchCoordsByIP('65.110.215.128', cb);
-
-
-
 module.exports = { nextISSTimesForMyLocation, };
