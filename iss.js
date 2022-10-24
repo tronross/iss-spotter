@@ -50,8 +50,9 @@ const fetchCoordsByIP = function(ip, callback) {
 
     const locationObj = JSON.parse(body); // parse
     if (locationObj.success === false) {
-      const msg = `The attempt to fetch the location data for the IP address: ${ip} failed.`;
-      return callback(msg, null);
+      const msg = `The attempt to fetch the location data for the IP address: ${ip} failed. Server message says ${locationObj.message}`;
+      callback(Error(msg), null);
+      return;
     }
     const location = {};
     location.latitude = locationObj.latitude;
