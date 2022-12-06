@@ -14,7 +14,7 @@ const printFlyOvers = function(flyOvers) {
 // FUNCTION
 // nextISSTimesForMyLocation: coordinates the retrieval and relaying of theoretical ISS fly-over times
 nextISSTimesForMyLocation()
-  .then((flyOvers) => {
-    printFlyOvers(flyOvers);
+  .then((ISSTimes) => {
+    printFlyOvers(ISSTimes);
   });
  
